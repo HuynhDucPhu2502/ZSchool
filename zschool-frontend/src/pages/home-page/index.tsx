@@ -1,4 +1,3 @@
-import Footer from "../../components/layout/Footer";
 import HeroBanner from "./HeroBanner";
 import Highlights from "./Highlights";
 
@@ -7,7 +6,6 @@ const HomePage = () => {
     <>
       <HeroBanner />
       <Highlights />
-      <Footer />
     </>
   );
 };
