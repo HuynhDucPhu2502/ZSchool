@@ -14,7 +14,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class ContactDTO {
+public class ContactRequest {
     @NotBlank(message = "Họ tên không được để trống")
     private String name;
 
