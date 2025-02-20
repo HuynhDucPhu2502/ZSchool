@@ -11,9 +11,17 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Contact {
+
     private String name;
+
+
     private String mobileNumber;
+
+
     private String email;
+
     private String subject;
+
+
     private String message;
 }
