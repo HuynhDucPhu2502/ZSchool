@@ -11,15 +11,19 @@ export const sendContact = async (contact: Contact) => {
     throw new Error("Các trường thông tin phải được điền.");
 
   try {
-    await fetch("http://localhost:8080/zschool/api/contacts", {
+    const response = await fetch("http://localhost:8080/zschool/api/contacts", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify(contact),
     });
+
+    if (!response.ok) {
+      const errorData = await response.json();
+      throw new Error(JSON.stringify(errorData));
+    }
   } catch (error) {
-    if (error instanceof Error)
-      throw new Error("Gửi tin nhắn thất bại, vui lòng thử lại.");
+    if (error instanceof Error) throw new Error(error.message);
   }
 };
