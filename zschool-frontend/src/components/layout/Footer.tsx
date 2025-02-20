@@ -19,13 +19,13 @@ const Footer = () => {
         </div>
 
         <div className="flex flex-col lg:flex-row space-y-4 lg:space-y-0 lg:space-x-4">
-          <Link to="/" className="text-lg hover:text-blue-600">
+          <Link to="zschool" className="text-lg hover:text-blue-600">
             Trang chủ
           </Link>
-          <Link to="/" className="text-lg hover:text-blue-600">
+          <Link to="zschool/courses" className="text-lg hover:text-blue-600">
             Khóa học
           </Link>
-          <Link to="/" className="text-lg hover:text-blue-600">
+          <Link to="zschool/contact" className="text-lg hover:text-blue-600">
             Liên hệ
           </Link>
         </div>

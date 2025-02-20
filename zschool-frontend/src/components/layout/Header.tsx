@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import { useState } from "react";
 
 import {
@@ -12,6 +12,9 @@ import Logo from "../../assets/logo.png";
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  const normalLinkStyle = "text-lg font-bold hover:text-blue-300";
+  const activeLinkStyle = "text-lg font-bold text-blue-600 ";
 
   return (
     <>
@@ -30,34 +33,57 @@ const Header = () => {
           </div>
 
           {/* FULL MENU */}
-          <div className="hidden md:block md:mr-24">
+          <div className="hidden md:block">
             <NavigationMenu>
               <NavigationMenuList className="flex md:space-x-4 space-x-2">
                 <NavigationMenuItem>
-                  <Link
-                    to="/"
-                    className="text-lg font-bold hover:text-blue-600"
+                  <NavLink
+                    to="/zschool"
+                    className={({ isActive }) =>
+                      isActive ? activeLinkStyle : normalLinkStyle
+                    }
+                    end
                   >
                     Trang chủ
-                  </Link>
+                  </NavLink>
                 </NavigationMenuItem>
 
                 <NavigationMenuItem>
-                  <Link
-                    to="/"
-                    className="text-lg font-bold hover:text-blue-600"
+                  <NavLink
+                    to="/zschool/courses"
+                    className={({ isActive }) =>
+                      isActive ? activeLinkStyle : normalLinkStyle
+                    }
+                    end
                   >
                     Khóa học
-                  </Link>
+                  </NavLink>
                 </NavigationMenuItem>
 
                 <NavigationMenuItem>
-                  <Link
-                    to="/"
-                    className="text-lg font-bold hover:text-blue-600"
+                  <NavLink
+                    to="/zschool/contact"
+                    className={({ isActive }) =>
+                      isActive ? activeLinkStyle : normalLinkStyle
+                    }
+                    end
                   >
                     Liên hệ
-                  </Link>
+                  </NavLink>
+                </NavigationMenuItem>
+
+                <NavigationMenuItem>
+                  <NavLink
+                    to="/zschool/auth?mode=login"
+                    className={({ isActive }) =>
+                      isActive
+                        ? activeLinkStyle + "hidden lg:block"
+                        : normalLinkStyle + "hidden lg:block"
+                    }
+                    end
+                  >
+                    Đăng nhập
+                  </NavLink>
                 </NavigationMenuItem>
               </NavigationMenuList>
             </NavigationMenu>

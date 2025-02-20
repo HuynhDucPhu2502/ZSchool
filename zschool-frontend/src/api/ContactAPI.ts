@@ -1,4 +1,4 @@
-import Contact from "../models/Contact";
+import { Contact } from "../models";
 
 export const sendContact = async (contact: Contact) => {
   if (
@@ -21,7 +21,8 @@ export const sendContact = async (contact: Contact) => {
 
     if (!response.ok) {
       const errorData = await response.json();
-      throw new Error(JSON.stringify(errorData));
+      const combinedMessage: string = Object.values(errorData).join("\n");
+      throw new Error(combinedMessage);
     }
   } catch (error) {
     if (error instanceof Error) throw new Error(error.message);

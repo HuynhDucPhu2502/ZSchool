@@ -10,9 +10,9 @@ import { Button } from "../../components/ui/button";
 import { Textarea } from "../../components/ui/textarea";
 import { Alert, AlertDescription, AlertTitle } from "../../components/ui/alert";
 
-import { sendContact } from "../api/ContactAPI";
+import { sendContact } from "../../api/ContactAPI";
 import { useMutation } from "@tanstack/react-query";
-import Contact from "../models/Contact";
+import { Contact } from "../../models";
 import { AlertCircle, SquareCheck } from "lucide-react";
 import { useEffect } from "react";
 
