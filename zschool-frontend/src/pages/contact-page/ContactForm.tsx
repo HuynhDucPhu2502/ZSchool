@@ -22,9 +22,15 @@ const ContactForm = () => {
   });
 
   useEffect(() => {
+    let timeout: NodeJS.Timeout;
+
     if (isSuccess) {
-      setTimeout(() => reset(), 60000);
+      timeout = setTimeout(() => reset(), 60000);
     }
+
+    return () => {
+      if (isSuccess || timeout) clearTimeout(timeout);
+    };
   }, [isSuccess, reset]);
 
   const handleSend = async (event: React.FormEvent<HTMLFormElement>) => {

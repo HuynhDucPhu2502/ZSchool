@@ -11,3 +11,8 @@ export type UserRegistrationRequest = {
   password: string;
   username: string;
 };
+
+export type UserLoginRequest = {
+  username: string;
+  password: string;
+};

@@ -1,5 +1,6 @@
 package me.huynhducphu.zschool_backend.service;
 
+import me.huynhducphu.zschool_backend.dto.request.UserRegistrationRequest;
 import me.huynhducphu.zschool_backend.model.Role;
 import me.huynhducphu.zschool_backend.model.User;
 import org.springframework.stereotype.Service;
@@ -11,7 +12,7 @@ import java.util.List;
  **/
 @Service
 public interface UserService {
-    User saveUser(User user);
+    User saveUser(UserRegistrationRequest userRegistrationRequest);
     Role saveRole(Role role);
     void addRoleToUser(String userName, String roleName);
     User getUser(String userName);

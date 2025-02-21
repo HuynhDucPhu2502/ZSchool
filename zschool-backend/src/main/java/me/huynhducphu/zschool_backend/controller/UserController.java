@@ -1,6 +1,9 @@
 package me.huynhducphu.zschool_backend.controller;
 
+import jakarta.validation.Valid;
 import me.huynhducphu.zschool_backend.dto.request.UserRegistrationRequest;
+import me.huynhducphu.zschool_backend.dto.request.UserRoleAssignmentRequest;
+import me.huynhducphu.zschool_backend.model.Role;
 import me.huynhducphu.zschool_backend.model.User;
 import me.huynhducphu.zschool_backend.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,15 +31,28 @@ public class UserController {
         return ResponseEntity.ok().body(userService.getUsers());
     }
 
-    @PostMapping("/users")
+    @PostMapping("/user/save")
     public ResponseEntity<Void> createUser(
-            @RequestBody UserRegistrationRequest userRegistrationRequest) {
-        User user = new User();
-        user.setName(userRegistrationRequest.getName());
-        user.setUsername(userRegistrationRequest.getUsername());
-        user.setPassword(userRegistrationRequest.getPassword());
+            @Valid @RequestBody UserRegistrationRequest userRegistrationRequest) {
 
-        userService.saveUser(user);
+        userService.saveUser(userRegistrationRequest);
+        return ResponseEntity.ok().build();
+    }
+
+    @PostMapping("/role/save")
+    public ResponseEntity<Void> createRole(
+            @Valid @RequestBody Role role) {
+        userService.saveRole(role);
+        return ResponseEntity.ok().build();
+    }
+
+    @PostMapping("/role/addtouser")
+    public ResponseEntity<Void> addRoleToUser(
+            @Valid @RequestBody UserRoleAssignmentRequest userRoleAssignmentRequest) {
+        userService.addRoleToUser(
+                userRoleAssignmentRequest.getUsername(),
+                userRoleAssignmentRequest.getRoleName()
+        );
         return ResponseEntity.ok().build();
     }
 
