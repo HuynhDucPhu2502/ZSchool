@@ -28,26 +28,25 @@ import java.util.Map;
 @Slf4j
 public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
     private final AuthenticationManager authenticationManager;
-    private final String SECRET_KEY = "HDP-DEP-TRAI";
-    private final Algorithm algorithm = Algorithm.HMAC256(SECRET_KEY.getBytes());
+    private final Algorithm algorithm;
 
     @Autowired
-    public CustomAuthenticationFilter(AuthenticationManager authenticationManager) {
+    public CustomAuthenticationFilter(
+            AuthenticationManager authenticationManager,
+            Algorithm algorithm
+    ) {
         this.authenticationManager = authenticationManager;
+        this.algorithm = algorithm;
     }
-
-
 
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException {
         try {
             ObjectMapper mapper = new ObjectMapper();
             UserLoginRequest loginRequest = mapper.readValue(request.getInputStream(), UserLoginRequest.class);
-            System.out.println(loginRequest);
+
             String username = loginRequest.getUsername();
             String password = loginRequest.getPassword();
-
-            log.info("Username is: {}, Password is: {}", username, password);
 
             UsernamePasswordAuthenticationToken authToken =
                     new UsernamePasswordAuthenticationToken(username, password);
