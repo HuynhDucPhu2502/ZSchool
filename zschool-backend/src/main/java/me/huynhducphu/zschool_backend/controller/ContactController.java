@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api")
 @CrossOrigin(origins = "http://localhost:3000")
 public class ContactController {
-    @PostMapping("/contacts")
+    @PostMapping("/contact/save")
     public ResponseEntity<Void> getContact(@Valid @RequestBody ContactRequest contact) {
         System.out.println(contact);
         return ResponseEntity.ok().build();
