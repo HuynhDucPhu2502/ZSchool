@@ -11,6 +11,8 @@ import lombok.extern.slf4j.Slf4j;
 import me.huynhducphu.zschool_backend.dto.request.UserLoginRequest;
 import me.huynhducphu.zschool_backend.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.ResponseCookie;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -18,6 +20,7 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import java.io.IOException;
+import java.time.Duration;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -81,13 +84,30 @@ public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFi
                 .withIssuer(request.getRequestURL().toString())
                 .sign(algorithm);
 
-        Map<String, String> tokens = new HashMap<>();
-        tokens.put("access_token", accessToken);
-        tokens.put("refresh_token", refreshToken);
+        ResponseCookie accessCookie = ResponseCookie.from("access_token", accessToken)
+                .httpOnly(true)
+                .secure(false)
+                .sameSite("Strict")
+                .path("/")
+                .maxAge(Duration.ofMinutes(10))
+                .build();
+        ResponseCookie refreshCookie = ResponseCookie.from("refresh_token", refreshToken)
+                .httpOnly(true)
+                .secure(false)
+                .sameSite("Strict")
+                .path("/auth/refresh")
+                .maxAge(Duration.ofMinutes(30))
+                .build();
+
+        response.addHeader(HttpHeaders.SET_COOKIE, accessCookie.toString());
+        response.addHeader(HttpHeaders.SET_COOKIE, refreshCookie.toString());
 
         response.setContentType("application/json");
-        new ObjectMapper().writeValue(response.getOutputStream(), tokens);
+        response.getWriter().write("{\"message\": \"Login successful\"}");
     }
 
-
+    @Override
+    protected void unsuccessfulAuthentication(HttpServletRequest request, HttpServletResponse response, AuthenticationException failed) throws IOException, ServletException {
+        super.unsuccessfulAuthentication(request, response, failed);
+    }
 }

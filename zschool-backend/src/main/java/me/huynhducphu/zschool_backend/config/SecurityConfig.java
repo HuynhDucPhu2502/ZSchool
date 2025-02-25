@@ -82,9 +82,6 @@ public class SecurityConfig  {
         return new ProviderManager(authProvider);
     }
 
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
+
 
 }

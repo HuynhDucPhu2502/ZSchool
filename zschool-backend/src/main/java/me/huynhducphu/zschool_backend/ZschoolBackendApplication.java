@@ -13,6 +13,11 @@ public class ZschoolBackendApplication {
 		SpringApplication.run(ZschoolBackendApplication.class, args);
 	}
 
+	@Bean
+	public PasswordEncoder passwordEncoder() {
+		return new BCryptPasswordEncoder();
+	}
+
 
 
 }
