@@ -25,17 +25,13 @@ export const registerUser = async (user: UserRegistrationRequest) => {
 
 export const loginUser = async (user: UserLoginRequest) => {
   try {
-    // Tạo form data
-    const formData = new URLSearchParams();
-    formData.append("username", user.username);
-    formData.append("password", user.password);
-
     const response = await fetch("http://localhost:8080/zschool/login", {
       method: "POST",
       headers: {
-        "Content-Type": "application/x-www-form-urlencoded",
+        "Content-Type": "application/json",
       },
-      body: formData.toString(),
+      body: JSON.stringify(user),
+      credentials: "include",
     });
 
     if (!response.ok) {
