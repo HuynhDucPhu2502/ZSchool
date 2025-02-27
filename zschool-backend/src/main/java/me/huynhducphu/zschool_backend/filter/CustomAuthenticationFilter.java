@@ -17,12 +17,11 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import java.io.IOException;
 import java.time.Duration;
-import java.util.HashMap;
-import java.util.Map;
 
 
 /**
@@ -65,7 +64,7 @@ public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFi
                                             HttpServletResponse response,
                                             FilterChain chain,
                                             Authentication authResult)
-            throws IOException, ServletException {
+            throws IOException {
         User user = (User) authResult.getPrincipal();
 
         String accessToken = JWT.create()
@@ -74,7 +73,7 @@ public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFi
                 .withIssuer(request.getRequestURL().toString())
                 .withClaim("roles",
                         user.getAuthorities().stream()
-                                .map(role -> role.getAuthority())
+                                .map(GrantedAuthority::getAuthority)
                                 .toList())
                 .sign(algorithm);
 
@@ -95,7 +94,7 @@ public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFi
                 .httpOnly(true)
                 .secure(false)
                 .sameSite("Strict")
-                .path("/auth/refresh")
+                .path("/")
                 .maxAge(Duration.ofMinutes(30))
                 .build();
 

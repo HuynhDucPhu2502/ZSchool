@@ -10,7 +10,6 @@ import java.util.List;
 /**
  * Admin 2/20/2025
  **/
-@Service
 public interface UserService {
     User saveUser(UserRegistrationRequest userRegistrationRequest);
     Role saveRole(Role role);
