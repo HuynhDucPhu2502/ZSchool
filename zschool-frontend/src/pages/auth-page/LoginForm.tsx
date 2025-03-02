@@ -9,7 +9,7 @@ import {
 } from "../../components/ui/card";
 import { Input } from "../../components/ui/input";
 import { useMutation } from "@tanstack/react-query";
-import { loginUser } from "../../api/UserAPI";
+import { fetchUserProfile, loginUser } from "../../api/UserAPI";
 import { UserLoginRequest } from "../../models";
 import { Alert, AlertDescription, AlertTitle } from "../../components/ui/alert";
 import { AlertCircle } from "lucide-react";
@@ -78,6 +78,13 @@ const LoginForm = () => {
           </Alert>
         )}
       </CardContent>
+      <Button
+        type="submit"
+        className="bg-blue-500 hover:bg-blue-600"
+        onClick={fetchUserProfile}
+      >
+        test
+      </Button>
     </Card>
   );
 };

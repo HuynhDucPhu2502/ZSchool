@@ -20,6 +20,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
+import java.util.Set;
+
 /**
  * Admin 2/20/2025
  **/
@@ -28,6 +30,12 @@ public class SecurityConfig  {
     private final UserDetailsService userDetailsService;
     private final PasswordEncoder passwordEncoder;
     private final Algorithm algorithm;
+
+    private static final Set<String> EXCLUDED_PATHS = Set.of(
+            "/login",
+            "/api/contact/save",
+            "/api/user/save"
+    );
 
     @Autowired
     public SecurityConfig(
@@ -52,7 +60,8 @@ public class SecurityConfig  {
                 .csrf(AbstractHttpConfigurer::disable)
 
                 // Stateless Session ---> JWT Auth
-                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                .sessionManagement(session ->
+                        session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
 
                 // Form Login && HTTP Basic
                 .formLogin(AbstractHttpConfigurer::disable)
@@ -60,14 +69,14 @@ public class SecurityConfig  {
 
                 // Authorization rules
                 .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers("/api/user/save", "/api/contact/save").permitAll()
-                        .requestMatchers("/api/users").authenticated()
+                        .requestMatchers(EXCLUDED_PATHS.toArray(new String[0])).permitAll()
+                        .anyRequest().authenticated()
                 )
 
                 // Custom Filer
                 .addFilter(new CustomAuthenticationFilter(authenticationManager, algorithm))
                 .addFilterBefore(
-                        new CustomAuthorizationFilter(algorithm),
+                        new CustomAuthorizationFilter(algorithm, userDetailsService),
                         UsernamePasswordAuthenticationFilter.class
                 );
 

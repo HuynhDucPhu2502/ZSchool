@@ -43,8 +43,27 @@ export const loginUser = async (user: UserLoginRequest) => {
     const data = await response.json();
     console.log(data);
   } catch (error) {
-    if (error instanceof Error) {
-      throw new Error(error.message);
-    }
+    if (error instanceof Error) throw new Error(error.message);
+  }
+};
+
+export const fetchUserProfile = async () => {
+  try {
+    const response = await fetch("http://localhost:8080/zschool/api/user/me", {
+      method: "GET",
+      credentials: "include",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    if (response.status == 401) console.log("401");
+    if (response.status == 403) console.log("403");
+    if (!response.ok) console.log(response.status);
+
+    const data = await response.json();
+    console.log(data);
+  } catch (error) {
+    if (error instanceof Error) throw new Error(error.message);
   }
 };

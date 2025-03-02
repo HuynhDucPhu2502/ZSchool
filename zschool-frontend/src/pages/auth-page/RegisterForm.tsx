@@ -116,8 +116,7 @@ const RegisterForm = () => {
             <SquareCheck className="h-4 w-4" />
             <AlertTitle>Thành Công</AlertTitle>
             <AlertDescription>
-              Thông tin của bạn đã được nhận. Chúng tôi sẽ liên hệ bạn sớm nhất
-              có thể.
+              Đăng ký thành công
               <br />
               Vui lòng quay về trang đăng nhập để thực hiện đăng nhập.
             </AlertDescription>

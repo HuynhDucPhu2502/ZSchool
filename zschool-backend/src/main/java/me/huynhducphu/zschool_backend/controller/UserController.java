@@ -3,11 +3,13 @@ package me.huynhducphu.zschool_backend.controller;
 import jakarta.validation.Valid;
 import me.huynhducphu.zschool_backend.dto.request.UserRegistrationRequest;
 import me.huynhducphu.zschool_backend.dto.request.UserRoleAssignmentRequest;
+import me.huynhducphu.zschool_backend.dto.response.UserProfileResponse;
 import me.huynhducphu.zschool_backend.model.Role;
 import me.huynhducphu.zschool_backend.model.User;
 import me.huynhducphu.zschool_backend.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -54,6 +56,18 @@ public class UserController {
                 userRoleAssignmentRequest.getRoleName()
         );
         return ResponseEntity.ok().build();
+    }
+
+    @GetMapping("/user/me")
+    public ResponseEntity<UserProfileResponse> getMyProfile(@AuthenticationPrincipal User user) {
+
+        UserProfileResponse userProfileResponse = new UserProfileResponse(
+                user.getId(),
+                user.getUsername(),
+                user.getName()
+        );
+
+        return ResponseEntity.ok().body(userProfileResponse);
     }
 
 
