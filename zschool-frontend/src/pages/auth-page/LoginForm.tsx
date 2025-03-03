@@ -1,4 +1,10 @@
 import { Link } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { useMutation } from "@tanstack/react-query";
+
+import { UserLoginRequest } from "../../models";
+import { AppDispatch } from "../../store";
+
 import { Button } from "../../components/ui/button";
 import {
   Card,
@@ -8,18 +14,20 @@ import {
   CardTitle,
 } from "../../components/ui/card";
 import { Input } from "../../components/ui/input";
-import { useMutation } from "@tanstack/react-query";
-import { fetchUserProfile, loginUser } from "../../api/UserAPI";
-import { UserLoginRequest } from "../../models";
 import { Alert, AlertDescription, AlertTitle } from "../../components/ui/alert";
 import { AlertCircle } from "lucide-react";
+import { loginUser } from "../../store/authSlice";
 
 const LoginForm = () => {
+  const dispatch = useDispatch<AppDispatch>();
+
   const { mutate, error, isPending, isError } = useMutation({
-    mutationFn: loginUser,
+    mutationFn: async (user: UserLoginRequest) => {
+      return dispatch(loginUser(user)).unwrap();
+    },
   });
 
-  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     const formData = new FormData(event.currentTarget);
@@ -78,13 +86,6 @@ const LoginForm = () => {
           </Alert>
         )}
       </CardContent>
-      <Button
-        type="submit"
-        className="bg-blue-500 hover:bg-blue-600"
-        onClick={fetchUserProfile}
-      >
-        test
-      </Button>
     </Card>
   );
 };

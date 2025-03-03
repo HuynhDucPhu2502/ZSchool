@@ -102,11 +102,19 @@ public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFi
         response.addHeader(HttpHeaders.SET_COOKIE, refreshCookie.toString());
 
         response.setContentType("application/json");
-        response.getWriter().write("{\"message\": \"Login successful\"}");
+        response.setCharacterEncoding("UTF-8");
+        response.getWriter().write("{\"message\": \"Đăng nhập thành công\"}");
     }
 
     @Override
-    protected void unsuccessfulAuthentication(HttpServletRequest request, HttpServletResponse response, AuthenticationException failed) throws IOException, ServletException {
-        super.unsuccessfulAuthentication(request, response, failed);
+    protected void unsuccessfulAuthentication(
+            HttpServletRequest request,
+            HttpServletResponse response,
+            AuthenticationException failed
+    ) throws IOException, ServletException {
+        response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+        response.setContentType("application/json");
+        response.setCharacterEncoding("UTF-8");
+        response.getWriter().write("{\"message\": \"Tài khoản hoặc mật khẩu không đúng\"}");
     }
 }

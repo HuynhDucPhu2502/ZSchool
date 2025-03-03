@@ -64,8 +64,6 @@ public class CustomAuthorizationFilter extends OncePerRequestFilter {
                     DecodedJWT decodedJWT = verifier.verify(token);
 
                     String username = decodedJWT.getSubject();
-                    System.out.println(username);
-
                     User user = (User) userDetailsService.loadUserByUsername(username);
                     Collection<Role> authorities = user.getRoles();
 
@@ -77,8 +75,9 @@ public class CustomAuthorizationFilter extends OncePerRequestFilter {
                     response.setStatus(HttpStatus.FORBIDDEN.value());
 
                     Map<String, String> error = new HashMap<>();
-                    error.put("error_message", e.getMessage());
+                    error.put("message", e.getMessage());
                     response.setContentType("application/json");
+                    response.setCharacterEncoding("UTF-8");
                     new ObjectMapper().writeValue(response.getOutputStream(), error);
 
                     return;
@@ -87,8 +86,9 @@ public class CustomAuthorizationFilter extends OncePerRequestFilter {
                 response.setStatus(HttpStatus.UNAUTHORIZED.value());
 
                 Map<String, String> error = new HashMap<>();
-                error.put("error_message", "Không có quyền truy cập");
+                error.put("message", "Không có quyền truy cập");
                 response.setContentType("application/json");
+                response.setCharacterEncoding("UTF-8");
                 new ObjectMapper().writeValue(response.getOutputStream(), error);
 
                 return;
