@@ -9,9 +9,17 @@ import {
 import { Button } from "../../components/ui/button";
 
 import Logo from "../../assets/logo.png";
+import { useSelector } from "react-redux";
+import { RootState } from "../../store";
+import { ChevronDown, ChevronUp } from "lucide-react";
 
 const Header = () => {
+  const { user, isAuthenticated } = useSelector(
+    (state: RootState) => state.auth
+  );
+
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
   const normalLinkStyle = "text-lg font-bold hover:text-blue-300";
   const activeLinkStyle = "text-lg font-bold text-blue-600 ";
@@ -33,7 +41,7 @@ const Header = () => {
           </div>
 
           {/* FULL MENU */}
-          <div className="hidden md:block">
+          <div className="hidden lg:block">
             <NavigationMenu>
               <NavigationMenuList className="flex md:space-x-4 space-x-2">
                 <NavigationMenuItem>
@@ -73,30 +81,56 @@ const Header = () => {
                 </NavigationMenuItem>
 
                 <NavigationMenuItem>
-                  <NavLink
-                    to="/zschool/auth?mode=login"
-                    className={({ isActive }) =>
-                      isActive
-                        ? activeLinkStyle + "hidden lg:block"
-                        : normalLinkStyle + "hidden lg:block"
-                    }
-                    end
-                  >
-                    Đăng nhập
-                  </NavLink>
+                  {!isAuthenticated && (
+                    <NavLink
+                      to="/zschool/auth?mode=login"
+                      className={({ isActive }) =>
+                        isActive
+                          ? activeLinkStyle + "hidden lg:block"
+                          : normalLinkStyle + "hidden lg:block"
+                      }
+                      end
+                    >
+                      Đăng xuất
+                    </NavLink>
+                  )}
+                  {isAuthenticated && (
+                    <div className="relative">
+                      <div
+                        onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+                        className="bg-blue-500 text-white font-bold px-4 py-2 rounded-lg hover:bg-blue-700 cursor-pointer"
+                      >
+                        <p>{user?.name}</p>
+                      </div>
+
+                      {isDropdownOpen && (
+                        <div className="absolute right-0 mt-2 w-50 bg-white border rounded-lg shadow-lg ">
+                          <Link
+                            to="/zschool/profile"
+                            className="block px-4 py-2 text-gray-700 hover:bg-gray-100 text-left"
+                          >
+                            Thông tin tài khoản
+                          </Link>
+                          <button className="w-full px-4 py-2 text-gray-700 hover:bg-gray-100 text-left">
+                            Đăng xuất
+                          </button>
+                        </div>
+                      )}
+                    </div>
+                  )}
                 </NavigationMenuItem>
               </NavigationMenuList>
             </NavigationMenu>
           </div>
 
           {/* MOBILE MENU */}
-          <div className="md:hidden">
+          <div className="lg:hidden">
             <Button onClick={() => setIsMenuOpen(!isMenuOpen)}>Menu</Button>
           </div>
         </div>
       </nav>
       {isMenuOpen && (
-        <div className="md:hidden bg-gray-100 rounded-lg shadow-lg border-gray-300 border-2">
+        <div className="lg:hidden bg-gray-100 rounded-lg shadow-lg border-gray-300 border-2">
           <div className="flex flex-col space-y-2 p-4">
             <Link
               to="/"
