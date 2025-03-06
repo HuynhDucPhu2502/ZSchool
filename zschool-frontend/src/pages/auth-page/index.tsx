@@ -12,22 +12,6 @@ const AuthPage = () => {
     <div className="min-h-[600px] flex justify-center items-center">
       {mode === "login" && <LoginForm />}
       {mode === "register" && <RegisterForm />}
-      <Button
-        onClick={testFetch}
-        type="button"
-        className="w-full lg:w-fit"
-        variant="destructive"
-      >
-        Test Fetch
-      </Button>
-      <Button
-        onClick={testRefresh}
-        type="button"
-        className="w-full lg:w-fit"
-        variant="destructive"
-      >
-        Test Refresh
-      </Button>
     </div>
   );
 };
