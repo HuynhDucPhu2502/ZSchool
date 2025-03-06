@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { User } from "../models";
 
-import { fetchUserProfile, loginUser } from "../services/authService";
+import { fetchUserProfile, loginUser, logout } from "../services/authService";
 
 type AuthState = {
   user: User | null;
@@ -16,12 +16,7 @@ const initialState: AuthState = {
 const authSlice = createSlice({
   name: "auth",
   initialState,
-  reducers: {
-    logout: (state) => {
-      state.user = null;
-      state.isAuthenticated = false;
-    },
-  },
+  reducers: {},
   extraReducers: (builder) => {
     builder.addCase(loginUser.fulfilled, (state) => {
       state.isAuthenticated = true;
@@ -32,6 +27,10 @@ const authSlice = createSlice({
         state.user = action.payload;
       }
     );
+    builder.addCase(logout.fulfilled, (state) => {
+      state.user = null;
+      state.isAuthenticated = false;
+    });
   },
 });
 
