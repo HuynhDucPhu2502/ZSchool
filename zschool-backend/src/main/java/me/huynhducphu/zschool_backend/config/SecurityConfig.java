@@ -33,7 +33,8 @@ public class SecurityConfig  {
 
     private static final Set<String> EXCLUDED_PATHS = Set.of(
             "/login",
-            "/api/contact/save",
+            "/api/auth/register",
+            "/api/auth/refresh",
             "/api/user/save"
     );
 

@@ -17,7 +17,6 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
-import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import java.io.IOException;
@@ -71,10 +70,7 @@ public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFi
                 .withSubject(user.getUsername())
                 .withExpiresAt(new java.util.Date(System.currentTimeMillis() + 10 * 60 * 1000))
                 .withIssuer(request.getRequestURL().toString())
-                .withClaim("roles",
-                        user.getAuthorities().stream()
-                                .map(GrantedAuthority::getAuthority)
-                                .toList())
+                .withClaim("roles", user.getRoles().stream().map(role -> role.getName()).toList())
                 .sign(algorithm);
 
         String refreshToken = JWT.create()
@@ -88,7 +84,7 @@ public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFi
                 .secure(false)
                 .sameSite("Strict")
                 .path("/")
-                .maxAge(Duration.ofMinutes(10))
+                .maxAge(Duration.ofSeconds(5))
                 .build();
         ResponseCookie refreshCookie = ResponseCookie.from("refresh_token", refreshToken)
                 .httpOnly(true)
@@ -103,6 +99,7 @@ public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFi
 
         response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");
+        response.setStatus(HttpServletResponse.SC_OK);
         response.getWriter().write("{\"message\": \"Đăng nhập thành công\"}");
     }
 

@@ -16,7 +16,7 @@ import {
 import { Input } from "../../components/ui/input";
 import { Alert, AlertDescription, AlertTitle } from "../../components/ui/alert";
 import { AlertCircle } from "lucide-react";
-import { loginUser } from "../../store/authSlice";
+import { loginUser } from "../../services/authService";
 
 const LoginForm = () => {
   const dispatch = useDispatch<AppDispatch>();

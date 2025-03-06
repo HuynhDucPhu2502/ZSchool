@@ -12,7 +12,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Admin 2/20/2025
@@ -33,42 +35,22 @@ public class UserController {
         return ResponseEntity.ok().body(userService.getUsers());
     }
 
-    @PostMapping("/user/save")
-    public ResponseEntity<Void> createUser(
-            @Valid @RequestBody UserRegistrationRequest userRegistrationRequest) {
-
-        userService.saveUser(userRegistrationRequest);
-        return ResponseEntity.ok().build();
-    }
-
-    @PostMapping("/role/save")
-    public ResponseEntity<Void> createRole(
-            @Valid @RequestBody Role role) {
-        userService.saveRole(role);
-        return ResponseEntity.ok().build();
-    }
-
-    @PostMapping("/role/addtouser")
-    public ResponseEntity<Void> addRoleToUser(
-            @Valid @RequestBody UserRoleAssignmentRequest userRoleAssignmentRequest) {
-        userService.addRoleToUser(
-                userRoleAssignmentRequest.getUsername(),
-                userRoleAssignmentRequest.getRoleName()
-        );
-        return ResponseEntity.ok().build();
-    }
-
-    @GetMapping("/user/me")
-    public ResponseEntity<UserProfileResponse> getMyProfile(@AuthenticationPrincipal User user) {
-
-        UserProfileResponse userProfileResponse = new UserProfileResponse(
-                user.getId(),
-                user.getUsername(),
-                user.getName()
-        );
-
-        return ResponseEntity.ok().body(userProfileResponse);
-    }
+//    @PostMapping("/role/save")
+//    public ResponseEntity<Void> createRole(
+//            @Valid @RequestBody Role role) {
+//        userService.saveRole(role);
+//        return ResponseEntity.ok().build();
+//    }
+//
+//    @PostMapping("/role/addtouser")
+//    public ResponseEntity<Void> addRoleToUser(
+//            @Valid @RequestBody UserRoleAssignmentRequest userRoleAssignmentRequest) {
+//        userService.addRoleToUser(
+//                userRoleAssignmentRequest.getUsername(),
+//                userRoleAssignmentRequest.getRoleName()
+//        );
+//        return ResponseEntity.ok().build();
+//    }
 
 
 }

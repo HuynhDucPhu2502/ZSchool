@@ -1,12 +1,11 @@
-package me.huynhducphu.zschool_backend.service;
+package me.huynhducphu.zschool_backend.service.impl;
 
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import me.huynhducphu.zschool_backend.dto.request.UserRegistrationRequest;
 import me.huynhducphu.zschool_backend.model.Role;
 import me.huynhducphu.zschool_backend.model.User;
 import me.huynhducphu.zschool_backend.repository.RoleRepository;
 import me.huynhducphu.zschool_backend.repository.UserRepository;
+import me.huynhducphu.zschool_backend.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;

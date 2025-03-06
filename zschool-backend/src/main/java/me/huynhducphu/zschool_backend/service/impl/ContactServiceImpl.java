@@ -1,9 +1,10 @@
-package me.huynhducphu.zschool_backend.service;
+package me.huynhducphu.zschool_backend.service.impl;
 
 import me.huynhducphu.zschool_backend.dto.request.ContactRequest;
 import me.huynhducphu.zschool_backend.model.Contact;
 import me.huynhducphu.zschool_backend.model.enums.ContactStatus;
 import me.huynhducphu.zschool_backend.repository.ContactRepository;
+import me.huynhducphu.zschool_backend.service.ContactService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

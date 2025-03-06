@@ -11,7 +11,7 @@ import {
   CardTitle,
 } from "../../components/ui/card";
 import { Input } from "../../components/ui/input";
-import { registerUser } from "../../api/userAPI";
+import { registerUser } from "../../services/authService";
 import { UserRegistrationRequest } from "../../models";
 import { Alert, AlertDescription, AlertTitle } from "../../components/ui/alert";
 import { AlertCircle, SquareCheck } from "lucide-react";

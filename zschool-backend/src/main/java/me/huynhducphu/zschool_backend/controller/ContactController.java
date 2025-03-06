@@ -26,4 +26,6 @@ public class ContactController {
         contactService.saveContact(contact);
         return ResponseEntity.ok().build();
     }
+
+
 }

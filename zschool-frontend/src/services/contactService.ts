@@ -1,3 +1,4 @@
+import axios from "axios";
 import { Contact } from "../models";
 
 export const sendContact = async (contact: Contact) => {
@@ -11,23 +12,20 @@ export const sendContact = async (contact: Contact) => {
     throw new Error("Các trường thông tin phải được điền.");
 
   try {
-    const response = await fetch(
+    await axios.post(
       "http://localhost:8080/zschool/api/contact/save",
+      contact,
       {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(contact),
+        headers: { "Content-Type": "application/json" },
       }
     );
-
-    if (!response.ok) {
-      const errorData = await response.json();
-      const combinedMessage: string = Object.values(errorData).join("\n");
-      throw new Error(combinedMessage);
-    }
   } catch (error) {
-    if (error instanceof Error) throw new Error(error.message);
+    if (axios.isAxiosError(error)) {
+      const errorMessageCombined = Object.values(error.response?.data).join(
+        "\n"
+      );
+      throw { message: errorMessageCombined };
+    }
+    throw { message: "Lỗi không xác định" };
   }
 };
