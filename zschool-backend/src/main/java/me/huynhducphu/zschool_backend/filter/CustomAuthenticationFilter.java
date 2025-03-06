@@ -84,7 +84,7 @@ public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFi
                 .secure(false)
                 .sameSite("Strict")
                 .path("/")
-                .maxAge(Duration.ofSeconds(5))
+                .maxAge(Duration.ofMinutes(10))
                 .build();
         ResponseCookie refreshCookie = ResponseCookie.from("refresh_token", refreshToken)
                 .httpOnly(true)
