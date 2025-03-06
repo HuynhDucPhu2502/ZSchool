@@ -34,8 +34,9 @@ export const loginUser = createAsyncThunk(
       if (response.status == 200) dispatch(fetchUserProfile());
     } catch (error) {
       if (axios.isAxiosError(error))
-        return rejectWithValue(error.response?.data || error.message);
-      return rejectWithValue("Lỗi không xác định");
+        return rejectWithValue(
+          error.response?.data || { message: "Lỗi không xác định" }
+        );
     }
   }
 );
@@ -55,23 +56,29 @@ export const fetchUserProfile = createAsyncThunk(
       return response.data;
     } catch (error) {
       if (axios.isAxiosError(error))
-        return rejectWithValue(error.response?.data || error.message);
-      return rejectWithValue("Lỗi không xác định");
+        return rejectWithValue(
+          error.response?.data || { message: "Lỗi không xác định" }
+        );
     }
   }
 );
 
-export const logout = async () => {
-  try {
-    await axios.post("http://localhost:8080/zschool/api/auth/logout", null, {
-      headers: { "Content-Type": "application/json" },
-      withCredentials: true,
-    });
-  } catch (error) {
-    if (axios.isAxiosError(error)) throw error.response?.data || error.message;
-    throw { message: "Lỗi không xác định" };
+export const logout = createAsyncThunk(
+  "auth/logout",
+  async (_, { rejectWithValue }) => {
+    try {
+      await axios.post("http://localhost:8080/zschool/api/auth/logout", null, {
+        headers: { "Content-Type": "application/json" },
+        withCredentials: true,
+      });
+    } catch (error) {
+      if (axios.isAxiosError(error))
+        return rejectWithValue(
+          error.response?.data || { message: "Lỗi không xác định" }
+        );
+    }
   }
-};
+);
 
 export const testFetch = async () => {
   try {
@@ -84,8 +91,8 @@ export const testFetch = async () => {
     );
     console.log(response.data);
   } catch (error) {
-    if (axios.isAxiosError(error)) throw error.response?.data || error.message;
-    throw { message: "Lỗi không xác định" };
+    if (axios.isAxiosError(error))
+      throw error.response?.data || { message: "Lỗi không xác định" };
   }
 };
 
@@ -101,7 +108,7 @@ export const testRefresh = async () => {
     );
     console.log(response.data);
   } catch (error) {
-    if (axios.isAxiosError(error)) throw error.response?.data || error.message;
-    throw { message: "Lỗi không xác định" };
+    if (axios.isAxiosError(error))
+      throw error.response?.data || { message: "Lỗi không xác định" };
   }
 };
