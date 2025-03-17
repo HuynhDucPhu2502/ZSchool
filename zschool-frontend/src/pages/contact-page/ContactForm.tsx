@@ -15,11 +15,15 @@ import { useMutation } from "@tanstack/react-query";
 import { Contact } from "../../models";
 import { AlertCircle, SquareCheck } from "lucide-react";
 import { useEffect } from "react";
+import { useSelector } from "react-redux";
+import { RootState } from "../../store";
 
 const ContactForm = () => {
   const { mutate, isPending, isError, isSuccess, error, reset } = useMutation({
     mutationFn: sendContact,
   });
+
+  const { isAuthenticated } = useSelector((state: RootState) => state.auth);
 
   useEffect(() => {
     let timeout: NodeJS.Timeout;
@@ -46,7 +50,7 @@ const ContactForm = () => {
       subject: formData.get("subject") as string,
     };
 
-    mutate(contactData);
+    mutate({ contact: contactData, isAuthenticated: isAuthenticated });
   };
 
   return (

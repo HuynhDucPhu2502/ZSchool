@@ -31,7 +31,7 @@ export const loginUser = createAsyncThunk(
         }
       );
 
-      if (response.status == 200) dispatch(fetchUserProfile());
+      if (response.status == 200) await dispatch(fetchUserProfile());
     } catch (error) {
       if (axios.isAxiosError(error))
         return rejectWithValue(
