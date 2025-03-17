@@ -35,7 +35,7 @@ public class SecurityConfig  {
             "/login",
             "/api/auth/register",
             "/api/auth/refresh",
-            "/api/user/save"
+            "/api/contact/saveWithoutLogin"
     );
 
     @Autowired

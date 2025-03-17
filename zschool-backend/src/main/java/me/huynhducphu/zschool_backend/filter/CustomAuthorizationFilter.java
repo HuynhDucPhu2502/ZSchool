@@ -40,9 +40,9 @@ public class CustomAuthorizationFilter extends OncePerRequestFilter {
 
     private static final Set<String> EXCLUDED_PATHS = Set.of(
             "/login",
-            "/api/contact/save",
             "/api/auth/register",
-            "/api/auth/refresh"
+            "/api/auth/refresh",
+            "/api/contact/saveWithoutLogin"
     );
 
     @Override

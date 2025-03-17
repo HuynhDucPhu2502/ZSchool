@@ -21,8 +21,14 @@ public class ContactController {
         this.contactService = contactService;
     }
 
-    @PostMapping("/contact/save")
-    public ResponseEntity<Void> getContact(@Valid @RequestBody ContactRequest contact) {
+    @PostMapping("/contact/saveWithoutLogin")
+    public ResponseEntity<Void> saveContactWithoutLogin(@Valid @RequestBody ContactRequest contact) {
+        contactService.saveContact(contact);
+        return ResponseEntity.ok().build();
+    }
+
+    @PostMapping("/contact/saveWithLogin")
+    public ResponseEntity<Void> saveContactWithLoign(@Valid @RequestBody ContactRequest contact) {
         contactService.saveContact(contact);
         return ResponseEntity.ok().build();
     }
