@@ -5,6 +5,7 @@ import HomePage from "../pages/home-page/index.tsx";
 import ContactPage from "../pages/contact-page/index.tsx";
 import AuthPage from "../pages/auth-page/index.tsx";
 import { Loader as RootLoader } from "../pages/RootPage";
+import AdminRootPage from "../pages/admin-pages/admin-root-page/index.tsx";
 
 const router = createBrowserRouter([
   {
@@ -22,6 +23,10 @@ const router = createBrowserRouter([
         ],
       },
     ],
+  },
+  {
+    path: "admin",
+    element: <AdminRootPage />,
   },
 ]);
 
